@@ -1,7 +1,7 @@
 # lazy-st
 
 This crate provides single-threaded lazy evaluation for Rust.
-It is an adaptation of the "[lazy]<https://github.com/reem/rust-lazy>" crate,
+It is an adaptation of the [lazy](https://github.com/reem/rust-lazy) crate,
 removing support for multi-threaded operation and
 making it compatible with newer Rust versions.
 
