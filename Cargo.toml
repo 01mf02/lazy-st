@@ -1,0 +1,13 @@
+[package]
+name = "lazy-st"
+version = "0.1.0"
+authors = [
+  "Jonathan Reem <jonathan.reem@gmail.com>",
+  "Michael Färber <michael.faerber@gedenkt.at>"
+]
+edition = "2018"
+
+description = "Single-threaded lazy evaluation"
+license = "MIT"
+
+[dependencies]
