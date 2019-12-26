@@ -74,15 +74,14 @@ impl<'a, T> Thunk<'a, T> {
 
     /// Force evaluation of a thunk.
     pub fn force(&self) {
+        match unsafe { &*self.0.get() } {
+            Value(_) => return,
+            Evaluating => {
+                panic!("Thunk::force called recursively. (A Thunk tried to force itself while trying to force itself).")
+            },
+            Function(_) => ()
+        }
         unsafe {
-            match *self.0.get() {
-                Value(_) => return,
-                Evaluating => {
-                    panic!("Thunk::force called recursively. (A Thunk tried to force itself while trying to force itself).")
-                },
-                Function(_) => ()
-            }
-
             match std::ptr::replace(self.0.get(), Evaluating) {
                 Function(f) => *self.0.get() = Value(f()),
                 _ => unreachable!(),
@@ -115,20 +114,20 @@ enum Inner<'a, T> {
 impl<'x, T> Deref for Thunk<'x, T> {
     type Target = T;
 
-    fn deref<'a>(&'a self) -> &'a T {
+    fn deref(&self) -> &T {
         self.force();
         match unsafe { &*self.0.get() } {
-            &Value(ref v) => v,
+            Value(ref v) => v,
             _ => unreachable!(),
         }
     }
 }
 
 impl<'x, T> DerefMut for Thunk<'x, T> {
-    fn deref_mut<'a>(&'a mut self) -> &'a mut T {
+    fn deref_mut(&mut self) -> &mut T {
         self.force();
         match unsafe { &mut *self.0.get() } {
-            &mut Value(ref mut v) => v,
+            Value(ref mut v) => v,
             _ => unreachable!(),
         }
     }
