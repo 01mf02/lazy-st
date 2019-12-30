@@ -16,7 +16,7 @@ fn main() {
     let a = lazy!(expensive());
 
     // Thunks are just smart pointers!
-    assert_eq!(*a, 7); // "I am only evaluated once." is printed here
+    assert_eq!(*a, 7); // "I am only evaluated once!" is printed here
 
     let b = [*a, *a]; // Nothing is printed.
     assert_eq!(b, [7, 7]);

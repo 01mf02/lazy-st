@@ -1,4 +1,4 @@
-use lazy_st::{lazy, Thunk};
+use lazy_st::{lazy, Lazy};
 use std::sync::{Arc, Mutex};
 use std::thread;
 
@@ -17,8 +17,10 @@ fn evaluate_just_once() {
 
 #[test]
 fn multiple_closures() {
-    let x = lazy!(0);
-    let y = lazy!(1);
+    // TODO: get rid of these type annotations,
+    // which are unfortunately necessary ATM
+    let x: Lazy<u32> = lazy!(0);
+    let y: Lazy<u32> = lazy!(1);
     let z = if true { x } else { y };
     assert_eq!(*z, 0);
 }
@@ -49,7 +51,7 @@ fn drop_internal_data_just_once() {
     let counter_clone = counter.clone();
     let result = thread::spawn(move || {
         let value = Dropper(counter_clone);
-        let t = Thunk::<()>::new(move || {
+        let t: Lazy<()> = lazy!({
             // Get a reference so value is captured.
             let _x = &value;
 
