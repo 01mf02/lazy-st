@@ -1,3 +1,5 @@
+#![no_std]
+
 //! Single-threaded lazy evaluation.
 //!
 //! Lazy evaluation allows you to define computations whose
@@ -49,8 +51,11 @@
 //! This crate is intended for use in single-threaded contexts.
 //! Sharing a lazy value between multiple threads is not supported.
 
-use std::cell::UnsafeCell;
-use std::ops::{Deref, DerefMut};
+extern crate alloc;
+
+use alloc::boxed::Box;
+use core::cell::UnsafeCell;
+use core::ops::{Deref, DerefMut};
 
 use self::Inner::{Evaluating, Unevaluated, Value};
 
@@ -113,7 +118,7 @@ where
             Unevaluated(_) => (),
         }
         unsafe {
-            match std::ptr::replace(self.0.get(), Evaluating) {
+            match core::ptr::replace(self.0.get(), Evaluating) {
                 Unevaluated(e) => *self.0.get() = Value(e.evaluate()),
                 _ => unreachable!(),
             };
