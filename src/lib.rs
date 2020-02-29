@@ -191,6 +191,20 @@ enum Inner<E, V> {
     Value(V),
 }
 
+impl<E, V> Clone for Thunk<E, V>
+where
+    E: Clone,
+    V: Clone,
+{
+    fn clone(&self) -> Self {
+        match unsafe { &*self.0.get() } {
+            Unevaluated(e) => Thunk(UnsafeCell::new(Unevaluated(e.clone()))),
+            Evaluating => panic!("Cloning thunk during evaluation."),
+            Value(v) => Thunk(UnsafeCell::new(Value(v.clone()))),
+        }
+    }
+}
+
 impl<E, V> Deref for Thunk<E, V>
 where
     E: Evaluate<V>,
