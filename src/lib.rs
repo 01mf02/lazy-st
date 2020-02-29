@@ -49,7 +49,7 @@
 //! ~~~
 //!
 //! Lazy values from this crate cannot be shared between threads.
-//! If you need this, please consider using the `lazy_mt` crate.
+//! If you need this, please consider using the `lazy-mt` crate.
 
 extern crate alloc;
 

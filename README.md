@@ -6,6 +6,9 @@ removing support for multi-threaded operation,
 adding support for `no_std` environments, and
 making it compatible with newer Rust versions.
 
+To share lazy values between threads, please consider using
+the [lazy-mt](https://github.com/01mf02/lazy-mt) crate.
+
 ## Example
 
 ~~~ rust
