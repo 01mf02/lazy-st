@@ -2,7 +2,8 @@
 
 This crate provides single-threaded lazy evaluation for Rust.
 It is an adaptation of the [lazy](https://github.com/reem/rust-lazy) crate,
-removing support for multi-threaded operation and
+removing support for multi-threaded operation,
+adding support for `no_std` environments, and
 making it compatible with newer Rust versions.
 
 ## Example

@@ -48,8 +48,8 @@
 //! }
 //! ~~~
 //!
-//! This crate is intended for use in single-threaded contexts.
-//! Sharing a lazy value between multiple threads is not supported.
+//! Lazy values from this crate cannot be shared between threads.
+//! If you need this, please consider using the `lazy_mt` crate.
 
 extern crate alloc;
 
