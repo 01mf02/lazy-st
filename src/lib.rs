@@ -60,6 +60,7 @@ use core::ops::{Deref, DerefMut};
 use self::Inner::{Evaluating, Unevaluated, Value};
 
 /// A lazily evaluated value.
+#[derive(Debug)]
 pub struct Thunk<E, V>(UnsafeCell<Inner<E, V>>);
 
 /// A lazily evaluated value produced from a closure.
@@ -185,6 +186,7 @@ impl<A: FnOnce() -> B, B> Evaluate<B> for A {
     }
 }
 
+#[derive(Debug)]
 enum Inner<E, V> {
     Unevaluated(E),
     Evaluating,
