@@ -9,5 +9,7 @@ edition = "2018"
 
 description = "Single-threaded lazy evaluation"
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/01mf02/lazy-st/"
 
 [dependencies]
